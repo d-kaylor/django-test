@@ -10,4 +10,5 @@ WORKDIR /tmp/src
 RUN pip install -U "pip>=19.3.1" && \
     pip install -r requirements.txt
 
-CMD python manage.py runserver 0.0.0.0:8080
+ENTRYPOINT ["python", "manage.py"]
+CMD ["runserver", "0.0.0.0:8080"]
