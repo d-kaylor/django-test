@@ -1,2 +1,4 @@
 __pycache__/
 *.pyc
+local_env
+podman_env
