@@ -1,0 +1,18 @@
+apiVersion: v1
+items:
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: kab-kab-helm
+  spec:
+    host: {{ .Values.route.hostname }}
+    port:
+      targetPort: http
+    tls:
+      termination: edge
+    to:
+      kind: Service
+      name: {{ include "kab-helm.fullname" . }}
+kind: List
+metadata:
+  resourceVersion: ""

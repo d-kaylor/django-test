@@ -1,0 +1,33 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kab-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kab-test
+  template:
+    metadata:
+      labels:
+        app: kab-test
+    spec:
+      containers:
+        - name: kab-test
+          image: image-registry.openshift-image-registry.svc:5000/kab/kab-test:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+          - name: DB_VENDOR
+            value: "postgres"
+          - name: DATABASE_NAME
+            valueFrom: { secretKeyRef: { name: kab-pguser-kab, key: dbname } }
+          - name: DATABASE_USER
+            valueFrom: { secretKeyRef: { name: kab-pguser-kab, key: user } }
+          - name: DATABASE_PASSWORD
+            valueFrom: { secretKeyRef: { name: kab-pguser-kab, key: password } }
+          - name: DATABASE_HOST
+            valueFrom: { secretKeyRef: { name: kab-pguser-kab, key: host } }
+          - name: DATABASE_PORT
+            valueFrom: { secretKeyRef: { name: kab-pguser-kab, key: port } }
